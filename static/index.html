@@ -35,7 +35,7 @@
 var buttons = ['Up', 'Left', 'Right', 'Down', 'B', 'A', 'Select', 'Start'];
 
 $(document).ready(function() {
-	var socket = io.connect('http://10.42.43.59:8080');
+	var socket = io.connect('http://82.130.48.164:8080');
 
 	for (var i = 0; i < buttons.length; i++) {
 		(function(key) {
@@ -43,6 +43,12 @@ $(document).ready(function() {
 				socket.emit('keydown', buttons[key]);
 			});
 			$("#" + buttons[key]).on('touchend', function() {
+				socket.emit('keyup', buttons[key]);
+			});
+			$("#" + buttons[key]).on('mousedown', function() {
+				socket.emit('keydown', buttons[key]);
+			});
+			$("#" + buttons[key]).on('mouseup', function() {
 				socket.emit('keyup', buttons[key]);
 			});
 		})(i);
