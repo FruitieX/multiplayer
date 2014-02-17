@@ -20,11 +20,13 @@
 
 <script>
 $(document).ready(function() {
-		console.log("ready")
-	var socket = io.connect('http://localhost:8080');
+	var socket = io.connect('http://10.42.43.59:8080');
 
-	$("#awesome").on('click', function() {
-		socket.emit('input', 'a');
+	$("#awesome").on('mousedown', function() {
+		socket.emit('keydown', 'a');
+	});
+	$("#awesome").on('mouseup', function() {
+		socket.emit('keyup', 'a');
 	});
 });
 </script>
