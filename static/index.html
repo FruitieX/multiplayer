@@ -14,20 +14,39 @@
 	<body>
 		<div class="row">
 			<div class="col-md-6 col-xs-6">
-				<button type="button" id="awesome" class="btn btn-default btn-lg">Awesome</button>
+				<button type="button" id="Up" class="btn btn-default btn-lg">Up</button>
+				<button type="button" id="Left" class="btn btn-default btn-lg">Left</button>
+				<button type="button" id="Right" class="btn btn-default btn-lg">Right</button>
+				<button type="button" id="Down" class="btn btn-default btn-lg">Down</button>
+			</div>
+			<div class="col-md-6 col-xs-6">
+				<button type="button" id="B" class="btn btn-default btn-lg">B</button>
+				<button type="button" id="A" class="btn btn-default btn-lg">A</button>
+			</div>
+		</div>
+		<div class="row">
+			<div class="col-md-12 col-xs-12">
+				<button type="button" id="Select" class="btn btn-default btn-lg">Select</button>
+				<button type="button" id="Start" class="btn btn-default btn-lg">Start</button>
 			</div>
 		</div>
 
 <script>
+var buttons = ['Up', 'Left', 'Right', 'Down', 'B', 'A', 'Select', 'Start'];
+
 $(document).ready(function() {
 	var socket = io.connect('http://10.42.43.59:8080');
 
-	$("#awesome").on('touchstart', function() {
-		socket.emit('keydown', 'Up');
-	});
-	$("#awesome").on('touchend', function() {
-		socket.emit('keyup', 'Up');
-	});
+	for (var i = 0; i < buttons.length; i++) {
+		(function(key) {
+			$("#" + buttons[key]).on('touchstart', function() {
+				socket.emit('keydown', buttons[key]);
+			});
+			$("#" + buttons[key]).on('touchend', function() {
+				socket.emit('keyup', buttons[key]);
+			});
+		})(i);
+	}
 });
 </script>
 

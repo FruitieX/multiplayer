@@ -11,10 +11,10 @@ var getKey = function(data) {
 		case 'Down': return 'Down';
 		case 'Left': return 'Left';
 		case 'Right': return 'Right';
-		case 'a': return 'a';
-		case 'b': return 'b';
-		case 'Return': return 'Return';
-		case 'BackSpace': return 'BackSpace';
+		case 'A': return 'a';
+		case 'B': return 'b';
+		case 'Start': return 'Return';
+		case 'Select': return 'BackSpace';
 		default: return;
 	}
 };
