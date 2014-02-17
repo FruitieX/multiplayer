@@ -6,9 +6,11 @@ var exec = require('child_process').exec;
 
 io.sockets.on('connection', function(socket) {
 	socket.on('keydown', function(data) {
+		console.log("keydown");
 		exec("xdotool keydown a");
 	});
 	socket.on('keyup', function(data) {
+		console.log("keyup");
 		exec("xdotool keyup a");
 	});
 });

@@ -22,10 +22,10 @@
 $(document).ready(function() {
 	var socket = io.connect('http://10.42.43.59:8080');
 
-	$("#awesome").on('mousedown', function() {
+	$("#awesome").on('touchstart', function() {
 		socket.emit('keydown', 'a');
 	});
-	$("#awesome").on('mouseup', function() {
+	$("#awesome").on('touchend', function() {
 		socket.emit('keyup', 'a');
 	});
 });
