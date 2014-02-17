@@ -50,24 +50,36 @@ $(document).ready(function() {
 
 	for (var i = 0; i < buttons.length; i++) {
 		(function(key) {
-			if(mobilecheck()) {
-				$("#" + buttons[key]).on('touchstart', function() {
+			if(mobilecheck()) { // we're on mobile, do touchy stuff
+				$("#" + buttons[key]).on('touchstart', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
 					socket.emit('keydown', buttons[key]);
 				});
-				$("#" + buttons[key]).on('touchend', function() {
+				$("#" + buttons[key]).on('touchend', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
 					socket.emit('keyup', buttons[key]);
 				});
-				$("#" + buttons[key]).on('touchcancel', function() {
+				$("#" + buttons[key]).on('touchcancel', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
 					socket.emit('keyup', buttons[key]);
 				});
 			} else {
-				$("#" + buttons[key]).on('mousedown', function() {
+				$("#" + buttons[key]).on('mousedown', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
 					socket.emit('keydown', buttons[key]);
 				});
-				$("#" + buttons[key]).on('mouseup', function() {
+				$("#" + buttons[key]).on('mouseup', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
 					socket.emit('keyup', buttons[key]);
 				});
-				$("#" + buttons[key]).on('mouseout', function() {
+				$("#" + buttons[key]).on('mouseout', function(event) {
+					event.preventDefault();
+					event.stopPropagation();
 					socket.emit('keyup', buttons[key]);
 				});
 			}
