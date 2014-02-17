@@ -25,7 +25,7 @@ io.sockets.on('connection', function(socket) {
 		exec("xdotool keydown " + getKey(data));
 	});
 	socket.on('keyup', function(data) {
-		console.log("keyup" + data);
+		console.log("keyup " + data);
 		exec("xdotool keyup " + getKey(data));
 	});
 });
