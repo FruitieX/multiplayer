@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<!-- Bootstrap core CSS -->
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap.min.css">
+		<!-- Bootstrap theme -->
+		<link rel="stylesheet" href="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/css/bootstrap-theme.min.css">
+
+		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
+		<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+
+		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
+	</head>
+	<body>
+		<div class="row">
+			<div class="col-md-6 col-xs-6">
+				<button type="button" id="awesome" class="btn btn-default btn-lg">Awesome</button>
+			</div>
+		</div>
+
+<script>
+$(document).ready(function() {
+		console.log("ready")
+	var socket = io.connect('http://localhost:8080');
+
+	$("#awesome").on('click', function() {
+		socket.emit('input', 'a');
+	});
+});
+</script>
+
+
+		<script src="http://netdna.bootstrapcdn.com/bootstrap/3.0.3/js/bootstrap.min.js"></script>
+	</body>
+</html>

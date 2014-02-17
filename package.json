@@ -1,0 +1,10 @@
+{
+	"name" : "multiplayer",
+	"version" : "0.0.1",
+	"description" : "lulz",
+	"main" : "multiplayer.js",
+	"dependencies" : {
+		"socket.io" : ">=0.9.16",
+		"node-static" : ">=0.7.3"
+	}
+}
