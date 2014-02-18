@@ -13,6 +13,8 @@ var getKey = function(data) {
 		case 'Right': return 'Right';
 		case 'A': return 'a';
 		case 'B': return 'b';
+		case 'C': return 'c';
+		case 'D': return 'd';
 		case 'Start': return 'Return';
 		case 'Select': return 'BackSpace';
 		default: return;
