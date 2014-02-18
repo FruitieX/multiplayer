@@ -9,7 +9,8 @@ how silly.
 Setup
 -----
 
-1. `npm update`
-2. change ip address in `static/index.html` to point to your machine
-3. `./multiplayer.js`
-4. get creative
+1. install `xdotool`
+2. `npm update`
+3. change ip address in `static/index.html` to point to your machine
+4. `./multiplayer.js`
+5. get creative
