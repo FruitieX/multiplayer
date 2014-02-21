@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var io = require('socket.io').listen(8080);
+var io = require('socket.io').listen(1338);
 var sys = require('sys');
 var exec = require('child_process').exec;
 
@@ -11,8 +11,8 @@ var getKey = function(data) {
 		case 'Down': return 'Down';
 		case 'Left': return 'Left';
 		case 'Right': return 'Right';
-		case 'A': return 'a';
-		case 'B': return 'b';
+		case 'A': return 'z';
+		case 'B': return 'x';
 		case 'C': return 'c';
 		case 'D': return 'd';
 		case 'Start': return 'Return';
@@ -41,4 +41,4 @@ require('http').createServer(function(req, res) {
 	req.addListener('end', function () {
 		file.serve(req, res);
 	}).resume();
-}).listen(8000);
+}).listen(1337);
