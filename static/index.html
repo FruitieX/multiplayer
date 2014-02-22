@@ -25,11 +25,12 @@
 				<div id="Down" class="btn btn-default btn-xlg btn-dir"><span class="glyphicon glyphicon-arrow-down"></span></div>
 			</div>
 			<div class="text-center col-md-6 col-xs-6">
-				<div id="D" class="btn btn-default btn-xlg btn-dir">D</div>
+				<!--div id="D" class="btn btn-default btn-xlg btn-dir">D</div>
 				<br>
 				<div id="B" class="btn btn-default btn-xlg btn-dir">B</div>
 				<div id="C" class="btn btn-default btn-xlg btn-dir">C</div>
-				<br>
+				<br-->
+				<div id="B" class="btn btn-default btn-xlg btn-dir">B</div>
 				<div id="A" class="btn btn-default btn-xlg btn-dir">A</div>
 			</div>
 		</div>
@@ -59,33 +60,33 @@ $(document).ready(function() {
 				$("#" + buttons[key]).on('touchstart', function(event) {
 					event.preventDefault();
 					event.stopPropagation();
-					socket.emit('keydown', buttons[key]);
+					socket.emit('keyPress', buttons[key]);
 				});
 				$("#" + buttons[key]).on('touchend', function(event) {
 					event.preventDefault();
 					event.stopPropagation();
-					socket.emit('keyup', buttons[key]);
+					socket.emit('keyRelease', buttons[key]);
 				});
 				$("#" + buttons[key]).on('touchcancel', function(event) {
 					event.preventDefault();
 					event.stopPropagation();
-					socket.emit('keyup', buttons[key]);
+					socket.emit('keyRelease', buttons[key]);
 				});
 			} else {
 				$("#" + buttons[key]).on('mousedown', function(event) {
 					event.preventDefault();
 					event.stopPropagation();
-					socket.emit('keydown', buttons[key]);
+					socket.emit('keyPress', buttons[key]);
 				});
 				$("#" + buttons[key]).on('mouseup', function(event) {
 					event.preventDefault();
 					event.stopPropagation();
-					socket.emit('keyup', buttons[key]);
+					socket.emit('keyRelease', buttons[key]);
 				});
 				$("#" + buttons[key]).on('mouseout', function(event) {
 					event.preventDefault();
 					event.stopPropagation();
-					socket.emit('keyup', buttons[key]);
+					socket.emit('keyRelease', buttons[key]);
 				});
 			}
 		})(i);
