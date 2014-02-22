@@ -1,6 +1,6 @@
 #!/usr/bin/env node
 
-var io = require('socket.io').listen(1338);
+var io = require('socket.io').listen(1338, { log: false });
 var sys = require('sys');
 var exec = require('child_process').exec;
 
@@ -31,7 +31,7 @@ var setRngTimer = function() {
 // safety first :>
 var getKey = function(data) {
 	switch(data) {
-		case 'Up': return '11';
+		case 'Up': return '111';
 		case 'Down': return '116';
 		case 'Left': return '113';
 		case 'Right': return '114';
@@ -43,22 +43,21 @@ var getKey = function(data) {
 	}
 };
 
-var keyPress = function(keycode) {
-	console.log("keyPress " + keycode);
-	exec("xdo keypress -k " + getKey(keycode));
+var keyPress = function(data) {
+	console.log(data);
+	exec("xdo keypress -k " + getKey(data));
 };
 
-var keyRelease = function(keycode) {
-	console.log("keyRelease " + keycode);
-	exec("xdo keyrelease -k " + getKey(keycode));
+var keyRelease = function(data) {
+	exec("xdo keyrelease -k " + getKey(data));
 };
 
 io.sockets.on('connection', function(socket) {
 	socket.on('keyPress', function(data) {
-		keyPress(getKey(data));
+		keyPress(data);
 	});
 	socket.on('keyRelease', function(data) {
-		keyRelease(getKey(data));
+		keyRelease(data);
 	});
 });
 
