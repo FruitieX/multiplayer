@@ -5,6 +5,7 @@
 	"main" : "multiplayer.js",
 	"dependencies" : {
 		"socket.io" : ">=0.9.16",
+		"cli-color" : ">=0.2.3",
 		"node-static" : ">=0.7.3"
 	}
 }

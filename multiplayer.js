@@ -3,6 +3,7 @@
 var io = require('socket.io').listen(1338, { log: false });
 var sys = require('sys');
 var exec = require('child_process').exec;
+var clc = require('cli-color');
 
 // how many seconds before RNG kicks in
 /*
@@ -44,12 +45,15 @@ var getKey = function(data) {
 };
 
 var keyPress = function(data) {
-	console.log(data);
+	var date_string = new Date().toTimeString().split(' ')[0] + ' ';
+	console.log(date_string + data);
 	exec("xdo keypress -k " + getKey(data));
+	io.sockets.emit('keyPress', data);
 };
 
 var keyRelease = function(data) {
 	exec("xdo keyrelease -k " + getKey(data));
+	io.sockets.emit('keyRelease', data);
 };
 
 io.sockets.on('connection', function(socket) {
@@ -65,6 +69,9 @@ io.sockets.on('connection', function(socket) {
 var static = require('node-static');
 
 var file = new static.Server('./static');
+
+// clear the terminal
+process.stdout.write('\u001B[2J\u001B[0;0f');
 
 require('http').createServer(function(req, res) {
 	req.addListener('end', function () {
