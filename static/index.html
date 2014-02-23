@@ -53,8 +53,14 @@ var mobilecheck = function() {
 
 $(document).ready(function() {
 	var socket = io.connect('http://82.130.48.136:1338');
-	socket.on('foo', function(data) {
-		console.log(data);
+	socket.on('keyPress', function(data) {
+		console.log('keyPress ' + data);
+		$('#' + data).addClass('active');
+	});
+
+	socket.on('keyRelease', function(data) {
+		console.log('keyRelease ' + data);
+		$('#' + data).removeClass('active');
 	});
 
 	for (var i = 0; i < buttons.length; i++) {
