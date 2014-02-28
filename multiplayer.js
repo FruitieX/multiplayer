@@ -53,12 +53,13 @@ var keyPress = function(data) {
 	io.sockets.emit('keyPress', data);
 	setTimeout(function() {
 		exec("xdo keyrelease -k " + getKey(data));
+		io.sockets.emit('keyRelease', data);
 	}, 100);
 };
 
 var keyRelease = function(data) {
 	//exec("xdo keyrelease -k " + getKey(data));
-	io.sockets.emit('keyRelease', data);
+	//io.sockets.emit('keyRelease', data);
 };
 
 io.sockets.on('connection', function(socket) {

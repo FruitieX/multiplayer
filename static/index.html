@@ -49,6 +49,7 @@
 
 <script>
 var buttons = ['Up', 'Left', 'Right', 'Down', 'A', 'B', 'C', 'D', 'Select', 'Start'];
+var buttons_pressed = [false, false, false, false, false, false, false, false, false, false];
 
 var mobilecheck = function() {
 	var check = false;
@@ -59,12 +60,12 @@ var mobilecheck = function() {
 $(document).ready(function() {
 	var socket = io.connect('http://82.130.59.240:1338');
 	socket.on('keyPress', function(data) {
-		console.log('keyPress ' + data);
+		//console.log('keyPress ' + data);
 		$('#' + data).addClass('active');
 	});
 
 	socket.on('keyRelease', function(data) {
-		console.log('keyRelease ' + data);
+		//console.log('keyRelease ' + data);
 		$('#' + data).removeClass('active');
 	});
 
@@ -107,58 +108,72 @@ $(document).ready(function() {
 		})(i);
 	}
 
+	var checkButton = function(eventname, key) {
+		if (eventname == 'keyPress') {
+			if (buttons_pressed[key] == false) {
+				buttons_pressed[key] = true;
+				socket.emit(eventname, buttons[key]);
+			}
+		}
+		else if (eventname == 'keyRelease') {
+			buttons_pressed[key] = false;
+		}
+	}
+
 	var sendKeyCode = function(event, eventname) {
 		switch ( event.keyCode ) {
 			case 38: // up
-				socket.emit(eventname, 'Up');
+				checkButton(eventname, 0);
 				break;
 
 			case 37: // left
-				socket.emit(eventname, 'Left');
+				checkButton(eventname, 1);
 				break;
 
 			case 40: // down
-				socket.emit(eventname, 'Down');
+				checkButton(eventname, 3);
 				break;
 
 			case 39: // right
-				socket.emit(eventname, 'Right');
+				checkButton(eventname, 2);
 				break;
 
 			case 13: // return
-				socket.emit(eventname, 'Start');
+				checkButton(eventname, 9);
 				break;
 
 			case 8: // backspace
-				socket.emit(eventname, 'Select');
+				checkButton(eventname, 8);
 				break;
 
 			case 32: // space
-				socket.emit(eventname, 'C');
+				checkButton(eventname, 6);
 				break;
 
 			case 16: // shift
-				socket.emit(eventname, 'D');
+				checkButton(eventname, 7);
 				break;
 
 			case 90: // Z
 			case 186: // semicolon (dvorak)
-				socket.emit(eventname, 'B');
+				checkButton(eventname, 5);
 				break;
 
 			case 88: // X
 			case 81: // Q (dvorak)
-				socket.emit(eventname, 'A');
+				checkButton(eventname, 4);
 				break;
 		}
 	}
 
 	var onKeyDown = function(event) {
-		console.log("keyPress: " + event.keyCode + " ");
+		event.preventDefault();
+		//console.log("keyPress: " + event.keyCode + " ");
 		sendKeyCode(event, 'keyPress');
 	}
 
 	var onKeyUp = function(event) {
+		event.preventDefault();
 		sendKeyCode(event, 'keyRelease');
 	}
 
