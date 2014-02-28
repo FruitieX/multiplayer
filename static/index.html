@@ -45,7 +45,7 @@
 		</div>
 
 <script>
-var buttons = ['Up', 'Left', 'Right', 'Down', 'D', 'C', 'B', 'A', 'Select', 'Start'];
+var buttons = ['Up', 'Left', 'Right', 'Down', 'Z', 'X', 'A', 'S', 'Select', 'Start'];
 
 var mobilecheck = function() {
 	var check = false;
@@ -103,6 +103,57 @@ $(document).ready(function() {
 			}
 		})(i);
 	}
+
+	var sendKeyCode = function(event, eventname) {
+		switch ( event.keyCode ) {
+			case 38: // up
+				socket.emit(eventname, 'Up');
+				break;
+
+			case 37: // left
+				socket.emit(eventname, 'Left');
+				break;
+
+			case 40: // down
+				socket.emit(eventname, 'Down');
+				break;
+
+			case 39: // right
+				socket.emit(eventname, 'Right');
+				break;
+
+			case 32: // space
+				socket.emit(eventname, 'A');
+				break;
+
+			case 16: // shift
+				socket.emit(eventname, 'B');
+				break;
+
+			case 122: // Z
+			case 59: // semicolon (dvorak)
+				socket.emit(eventname, 'C');
+				break;
+
+			case 120: // X
+			case 113: // Q (dvorak)
+				socket.emit(eventname, 'D');
+				break;
+		}
+	}
+
+	var onKeyDown = function(event) {
+		console.log("keyPress: " + event.keyCode + " ");
+		sendKeyCode(event, 'keyPress');
+	}
+
+	var onKeyUp = function(event) {
+		sendKeyCode(event, 'keyRelease');
+	}
+
+	document.addEventListener( 'keydown', onKeyDown, false );
+	document.addEventListener( 'keyup', onKeyUp, false );
+
 });
 </script>
 
