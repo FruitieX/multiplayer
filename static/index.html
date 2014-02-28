@@ -25,13 +25,15 @@
 				<div id="Down" class="btn btn-default btn-xlg btn-dir"><span class="glyphicon glyphicon-arrow-down"></span></div>
 			</div>
 			<div class="text-center col-md-6 col-xs-6">
-				<!--div id="D" class="btn btn-default btn-xlg btn-dir">D</div>
+				<div id="D" class="btn btn-default btn-xlg btn-dir">D</div>
 				<br>
-				<div id="B" class="btn btn-default btn-xlg btn-dir">B</div>
 				<div id="C" class="btn btn-default btn-xlg btn-dir">C</div>
-				<br-->
-				<div id="B" class="btn btn-default btn-xlg btn-main">B</div>
-				<div id="A" class="btn btn-default btn-xlg btn-main">A</div>
+				<div id="B" class="btn btn-default btn-xlg btn-dir">B</div>
+				<br>
+				<div id="A" class="btn btn-default btn-xlg btn-dir">A</div>
+
+				<!--div id="B" class="btn btn-default btn-xlg btn-main">B</div>
+				<div id="A" class="btn btn-default btn-xlg btn-main">A</div-->
 			</div>
 		</div>
 		<br>
@@ -52,7 +54,7 @@ var mobilecheck = function() {
 }
 
 $(document).ready(function() {
-	var socket = io.connect('http://82.130.48.136:1338');
+	var socket = io.connect('http://82.130.59.240:1338');
 	socket.on('keyPress', function(data) {
 		console.log('keyPress ' + data);
 		$('#' + data).addClass('active');

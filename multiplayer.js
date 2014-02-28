@@ -38,6 +38,8 @@ var getKey = function(data) {
 		case 'Right': return '114';
 		case 'A': return '61';
 		case 'B': return '56';
+		case 'C': return '38';
+		case 'D': return '39';
 		case 'Start': return '36';
 		case 'Select': return '22';
 		default: return;
