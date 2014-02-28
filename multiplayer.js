@@ -4,6 +4,7 @@ var io = require('socket.io').listen(1338, { log: false });
 var sys = require('sys');
 var exec = require('child_process').exec;
 var clc = require('cli-color');
+var _ = require('underscore');
 
 // how many seconds before RNG kicks in
 /*
@@ -29,45 +30,68 @@ var setRngTimer = function() {
 };
 */
 
-// safety first :>
-var getKey = function(data) {
-	switch(data) {
-		case 'Up': return '111';
-		case 'Down': return '116';
-		case 'Left': return '113';
-		case 'Right': return '114';
-		case 'A': return '56';
-		case 'B': return '61';
-		case 'C': return '38';
-		case 'D': return '39';
-		case 'Start': return '36';
-		case 'Select': return '22';
+// need to keep track of these so we can handle left+right/up+down situationS
+var buttons = ['Up', 'Left', 'Right', 'Down', 'A', 'B', 'C', 'D', 'Select', 'Start'];
+var buttons_keycodes = [111, 116, 114, 116, 56, 61, 38, 39, 22, 36];
+var buttons_pressed = [false, false, false, false, false, false, false, false, false, false];
+
+var checkButton = function(eventname, keyname) {
+	var key = getKey(keyname);
+	if (eventname == 'keyPress') {
+		if (buttons_pressed[key] == false) {
+			buttons_pressed[key] = true;
+			exec("xdo keypress -k " + buttons_keycodes[key]);
+			io.sockets.emit('keyPress', keyname);
+		}
+	}
+	else if (eventname == 'keyRelease') {
+		if (buttons_pressed[key] == true) {
+			buttons_pressed[key] = false;
+			exec("xdo keyrelease -k " + buttons_keycodes[key]);
+			io.sockets.emit('keyRelease', keyname);
+		}
+	}
+}
+
+var getKey = function(keyname) {
+	switch(keyname) {
+		case 'Up': return 0;
+		case 'Down': return 3;
+		case 'Left': return 1;
+		case 'Right': return 2;
+		case 'A': return 4;
+		case 'B': return 5;
+		case 'C': return 6;
+		case 'D': return 7;
+		case 'Start': return 9;
+		case 'Select': return 8;
 		default: return;
 	}
 };
 
-var keyPress = function(data) {
+var keyPress = _.throttle(function(keyname) {
 	var date_string = new Date().toTimeString().split(' ')[0] + ' ';
-	console.log(date_string + data);
-	exec("xdo keypress -k " + getKey(data));
-	io.sockets.emit('keyPress', data);
+	console.log(date_string + key);
+
+	checkButton('keyPress', getKey(keyname));
+	/*
 	setTimeout(function() {
 		exec("xdo keyrelease -k " + getKey(data));
 		io.sockets.emit('keyRelease', data);
 	}, 100);
-};
+	*/
+}, 200);
 
-var keyRelease = function(data) {
-	//exec("xdo keyrelease -k " + getKey(data));
-	//io.sockets.emit('keyRelease', data);
+var keyRelease = function(keyname) {
+	checkButton('keyRelease', getKey(keyname));
 };
 
 io.sockets.on('connection', function(socket) {
-	socket.on('keyPress', function(data) {
-		keyPress(data);
+	socket.on('keyPress', function(keyname) {
+		keyPress(keyname);
 	});
-	socket.on('keyRelease', function(data) {
-		keyRelease(data);
+	socket.on('keyRelease', function(keyname) {
+		keyRelease(keyname);
 	});
 });
 
