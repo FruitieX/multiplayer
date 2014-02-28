@@ -117,6 +117,7 @@ $(document).ready(function() {
 		}
 		else if (eventname == 'keyRelease') {
 			buttons_pressed[key] = false;
+			socket.emit(eventname, buttons[key]);
 		}
 	}
 
@@ -168,7 +169,6 @@ $(document).ready(function() {
 
 	var onKeyDown = function(event) {
 		event.preventDefault();
-		//console.log("keyPress: " + event.keyCode + " ");
 		sendKeyCode(event, 'keyPress');
 	}
 

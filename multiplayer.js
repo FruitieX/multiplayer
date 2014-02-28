@@ -32,7 +32,7 @@ var setRngTimer = function() {
 
 // need to keep track of these so we can handle left+right/up+down situationS
 var buttons = ['Up', 'Left', 'Right', 'Down', 'A', 'B', 'C', 'D', 'Select', 'Start'];
-var buttons_keycodes = [111, 116, 114, 116, 56, 61, 38, 39, 22, 36];
+var buttons_keycodes = [111, 113, 114, 116, 56, 61, 38, 39, 22, 36];
 var buttons_pressed = [false, false, false, false, false, false, false, false, false, false];
 
 var checkButton = function(eventname, keyname) {
@@ -49,6 +49,7 @@ var checkButton = function(eventname, keyname) {
 			buttons_pressed[key] = false;
 			exec("xdo keyrelease -k " + buttons_keycodes[key]);
 			io.sockets.emit('keyRelease', keyname);
+			console.log('keyRelease: ', keyname);
 		}
 	}
 }
@@ -71,9 +72,9 @@ var getKey = function(keyname) {
 
 var keyPress = _.throttle(function(keyname) {
 	var date_string = new Date().toTimeString().split(' ')[0] + ' ';
-	console.log(date_string + key);
+	console.log(date_string + keyname);
 
-	checkButton('keyPress', getKey(keyname));
+	checkButton('keyPress', keyname);
 	/*
 	setTimeout(function() {
 		exec("xdo keyrelease -k " + getKey(data));
@@ -83,7 +84,7 @@ var keyPress = _.throttle(function(keyname) {
 }, 200);
 
 var keyRelease = function(keyname) {
-	checkButton('keyRelease', getKey(keyname));
+	checkButton('keyRelease', keyname);
 };
 
 io.sockets.on('connection', function(socket) {
