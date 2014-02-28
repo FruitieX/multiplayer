@@ -10,13 +10,13 @@
 		<link rel="stylesheet" href="styles.css">
 
 		<script src="http://code.jquery.com/jquery-1.10.2.min.js"></script>
-		<script src="http://cdnjs.cloudflare.com/ajax/libs/socket.io/0.9.16/socket.io.min.js"></script>
+		<script src="socket.io.min.js"></script>
 
 		<meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, user-scalable=no">
 	</head>
 	<body>
 	<div class="container">
-		<h1>TäfLAN plays Yoshi's Island</h1>
+		<h1>TäfLAN plays Pokemon Red</h1>
 		<h2>URL: http//82.130.59.240:1337</h2>
 		<div class="row">
 			<div class="text-center col-md-6 col-xs-6">
@@ -35,15 +35,15 @@
 				<br>
 				<div id="A" class="btn btn-default btn-xlg btn-dir">Space</div-->
 
-				<div id="B" class="btn btn-default btn-xlg btn-main">B (X)</div>
-				<div id="A" class="btn btn-default btn-xlg btn-main">A (Z)</div>
+				<div id="B" class="btn btn-default btn-xlg btn-main">B (Z)</div>
+				<div id="A" class="btn btn-default btn-xlg btn-main">A (X)</div>
 			</div>
 		</div>
 		<br>
 		<div class="row">
 			<div class="text-center col-md-12 col-xs-12">
-				<div id="Select" class="btn btn-default btn-lg">Select</div>
-				<div id="Start" class="btn btn-default btn-lg">Start</div>
+				<div id="Select" class="btn btn-default btn-lg">Select (backspace)</div>
+				<div id="Start" class="btn btn-default btn-lg">Start (enter)</div>
 			</div>
 		</div>
 
@@ -134,21 +134,21 @@ $(document).ready(function() {
 				break;
 
 			case 32: // space
-				socket.emit(eventname, 'A');
+				socket.emit(eventname, 'C');
 				break;
 
 			case 16: // shift
-				socket.emit(eventname, 'B');
+				socket.emit(eventname, 'D');
 				break;
 
 			case 90: // Z
 			case 186: // semicolon (dvorak)
-				socket.emit(eventname, 'C');
+				socket.emit(eventname, 'B');
 				break;
 
 			case 88: // X
 			case 81: // Q (dvorak)
-				socket.emit(eventname, 'D');
+				socket.emit(eventname, 'A');
 				break;
 		}
 	}

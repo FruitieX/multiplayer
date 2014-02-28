@@ -36,8 +36,8 @@ var getKey = function(data) {
 		case 'Down': return '116';
 		case 'Left': return '113';
 		case 'Right': return '114';
-		case 'A': return '61';
-		case 'B': return '56';
+		case 'A': return '56';
+		case 'B': return '61';
 		case 'C': return '38';
 		case 'D': return '39';
 		case 'Start': return '36';
@@ -51,10 +51,13 @@ var keyPress = function(data) {
 	console.log(date_string + data);
 	exec("xdo keypress -k " + getKey(data));
 	io.sockets.emit('keyPress', data);
+	setTimeout(function() {
+		exec("xdo keyrelease -k " + getKey(data));
+	}, 100);
 };
 
 var keyRelease = function(data) {
-	exec("xdo keyrelease -k " + getKey(data));
+	//exec("xdo keyrelease -k " + getKey(data));
 	io.sockets.emit('keyRelease', data);
 };
 
@@ -80,3 +83,8 @@ require('http').createServer(function(req, res) {
 		file.serve(req, res);
 	}).resume();
 }).listen(1337);
+
+process.on('uncaughtException', function (err) {
+	console.error(err.stack);
+	console.log("ERROR! Node not exiting.");
+});
