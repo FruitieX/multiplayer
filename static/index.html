@@ -122,6 +122,14 @@ $(document).ready(function() {
 				socket.emit(eventname, 'Right');
 				break;
 
+			case 13: // return
+				socket.emit(eventname, 'Start');
+				break;
+
+			case 8: // backspace
+				socket.emit(eventname, 'Select');
+				break;
+
 			case 32: // space
 				socket.emit(eventname, 'A');
 				break;
